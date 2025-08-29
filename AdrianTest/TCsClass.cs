@@ -42,7 +42,14 @@ namespace AdrianTest
         [TearDown]
         public void CloseBrowser()
         {
-            _webDriver.Close();
+            try
+            {
+                _webDriver.Close();
+            }
+            catch (Exception ex)
+            {
+                throw (ex); //TODO -to be improved for exception details
+            }            
         }
 
         [Test]
@@ -94,7 +101,6 @@ namespace AdrianTest
             Assert.That(isActionGenreSelected.Equals(true));
             bool isCpmedyGenreSelected = moviesPage.IsGenreSelected(genreList[1]);
             Assert.That(isCpmedyGenreSelected.Equals(true));
-
         }
     }
 }

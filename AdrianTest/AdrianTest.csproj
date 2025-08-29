@@ -70,6 +70,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.TestPlatform.ObjectModel.17.12.0\lib\net462\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=4.3.2.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.4.3.2\lib\net462\nunit.framework.dll</HintPath>
     </Reference>
@@ -137,16 +140,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\API_TCsClass.cs" />
+    <Compile Include="APIs\MoviesPageResponse.cs" />
+    <Compile Include="APIs\MoviesPage_API.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Pages\MoviesPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TCsClass.cs" />
+    <Compile Include="Utils\AUTConfigServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TCs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

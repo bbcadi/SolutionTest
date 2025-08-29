@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Threading;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+
+using AdrianTest.Utils;
 
 namespace AdrianTest.Pages
 {
     class HomePage : BasePage
     {
-        private string testedUrl = "https://themoviedb.org";
-        private string expectedUrlTitle = "The Movie Database (TMDB)";
-        private string moviesMenuElementText = "Movies";
+        private string _testedUrl = string.Empty;
+        private string _expectedUrlTitle = "The Movie Database (TMDB)";
+        private string _moviesMenuElementText = "Movies";
 
-        private string navigationMenuElementPath = "dropdown_menu";
-        private string popularMoviesDropdownItemPath = "//*[@aria-label='Popular']";
-        private string rejectAllCookiesButtonPath = "onetrust-reject-all-handler";
+        private string _navigationMenuElementPath = "dropdown_menu";
+        private string _popularMoviesDropdownItemPath = "//*[@aria-label='Popular']";
+        private string _rejectAllCookiesButtonPath = "onetrust-reject-all-handler";
 
         public HomePage(IWebDriver driver) : base(driver)
-        {
-            GoToUrl(testedUrl);
+        {            
+            _testedUrl = new AUTConfigServices().GetTestedUrlPath();
+            GoToUrl(_testedUrl);
         }        
 
         public void OpenMoviesPage()//TODO
@@ -36,7 +40,7 @@ namespace AdrianTest.Pages
                 while (!pageWasLoaded && count < 10)
                 {
                     Thread.Sleep(1000);
-                    if (driver.Title.Equals(expectedUrlTitle))
+                    if (driver.Title.Equals(_expectedUrlTitle))
                     {
                         pageWasLoaded = true;
                     }
@@ -56,7 +60,7 @@ namespace AdrianTest.Pages
                 Thread.Sleep(2000);
                 //TODO - implicit wait for cookies element to appear on screen
 
-                IWebElement rejectAllCookiesButtonElement = driver.FindElement(By.Id(rejectAllCookiesButtonPath));
+                IWebElement rejectAllCookiesButtonElement = driver.FindElement(By.Id(_rejectAllCookiesButtonPath));
                 rejectAllCookiesButtonElement.Click();
                 Thread.Sleep(500);
             }
@@ -70,7 +74,7 @@ namespace AdrianTest.Pages
         {
             try
             {
-                driver.Navigate().GoToUrl(testedUrl);
+                driver.Navigate().GoToUrl(url);
                 Thread.Sleep(1000);
             }
             catch (Exception ex)
@@ -96,8 +100,8 @@ namespace AdrianTest.Pages
         {
             try
             {
-                IWebElement navigationMenuElement = driver.FindElement(By.ClassName(navigationMenuElementPath));
-                IWebElement moviesMenuElement = navigationMenuElement.FindElement(By.LinkText(moviesMenuElementText));
+                IWebElement navigationMenuElement = driver.FindElement(By.ClassName(_navigationMenuElementPath));
+                IWebElement moviesMenuElement = navigationMenuElement.FindElement(By.LinkText(_moviesMenuElementText));
                 
                 //Creating object of an Actions class
                 Actions action = new Actions(driver);
@@ -106,7 +110,7 @@ namespace AdrianTest.Pages
                 action.MoveToElement(moviesMenuElement).Perform();
                 Thread.Sleep(500);
 
-                IWebElement popularMoviesDropdownItem = navigationMenuElement.FindElement(By.XPath(popularMoviesDropdownItemPath));
+                IWebElement popularMoviesDropdownItem = navigationMenuElement.FindElement(By.XPath(_popularMoviesDropdownItemPath));
                 popularMoviesDropdownItem.Click();
             }
             catch (Exception ex)
